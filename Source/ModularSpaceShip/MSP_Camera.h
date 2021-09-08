@@ -18,11 +18,43 @@ public:
 	// Sets default values for this pawn's properties
 	AMSP_Camera();
 
+	// components
 	UPROPERTY(EditAnywhere)
 		UCameraComponent * PlayerCamera;
 	UPROPERTY(EditAnywhere)
 		USpringArmComponent * CameraArm;
+		
+	//  movement
+	UPROPERTY(EditAnywhere)
+		float MovementSpeed;
+	UPROPERTY(EditAnywhere)
+		float MovementRestrictX;
+	UPROPERTY(EditAnywhere)
+		float MovementRestrictY;
 
+	void MoveUp(float InputAxis);
+	void MoveRight(float InputAxis);
+	// zoom
+	UPROPERTY(EditAnywhere)
+		float ZoomSpeed;
+	UPROPERTY(EditAnywhere)
+		float ZoomLowRestrict;
+	UPROPERTY(EditAnywhere)
+		float ZoomHighRestrict;
+
+	void HandleZoom(float InputAxis);
+	// turn
+	UPROPERTY(EditAnywhere)
+		float TurnSpeed;
+	UPROPERTY(EditAnywhere)
+		float TurnLeftRestrict;
+	UPROPERTY(EditAnywhere)
+		float TurnRightRestrict;
+
+	void HandleTurn(float InputAxis);
+	FVector AjustPositionByRotation(float Angle, float Input);
+	// utils
+	void ApplyRestrict(float & CheckedParam, float MinValue, float MaxValue);
 
 protected:
 	// Called when the game starts or when spawned
