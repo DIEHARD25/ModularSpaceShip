@@ -34,6 +34,21 @@ public:
 
 	void MoveUp(float InputAxis);
 	void MoveRight(float InputAxis);
+	// height
+
+	UPROPERTY(EditAnywhere)
+		float PlaneHeight;
+	UPROPERTY(EditAnywhere)
+		int32 NumOfPlanesHigh;
+	UPROPERTY(EditAnywhere)
+		int32 NumOfPlanesLow;
+
+	int32 CurrentPlaneNum;;
+
+	void ChangePlaneToHigher();
+	void ChangePlaneToLower();
+	void ResetToDefaultPlane();
+
 	// zoom
 	UPROPERTY(EditAnywhere)
 		float ZoomSpeed;
@@ -41,6 +56,8 @@ public:
 		float ZoomLowRestrict;
 	UPROPERTY(EditAnywhere)
 		float ZoomHighRestrict;
+	UPROPERTY(EditAnywhere)
+		float DefaultZoom;
 
 	void HandleZoom(float InputAxis);
 	// turn
@@ -50,11 +67,14 @@ public:
 		float TurnLeftRestrict;
 	UPROPERTY(EditAnywhere)
 		float TurnRightRestrict;
+	UPROPERTY(EditAnywhere)
+		FRotator DefaultTurn;
 
 	void HandleTurn(float InputAxis);
 	FVector AjustPositionByRotation(float Angle, float Input);
 	// utils
 	void ApplyRestrict(float & CheckedParam, float MinValue, float MaxValue);
+	void ResetCameraRotationAndZoom();
 
 protected:
 	// Called when the game starts or when spawned
