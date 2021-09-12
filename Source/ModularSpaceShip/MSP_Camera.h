@@ -23,7 +23,9 @@ public:
 		UCameraComponent * PlayerCamera;
 	UPROPERTY(EditAnywhere)
 		USpringArmComponent * CameraArm;
-		
+	
+	APlayerController * CurrentPC;
+
 	//  movement
 	UPROPERTY(EditAnywhere)
 		float MovementSpeed;
@@ -70,9 +72,14 @@ public:
 	UPROPERTY(EditAnywhere)
 		FRotator DefaultTurn;
 
+	float CosValueUp;
+	float SinValueUp;
+	float CosValueRight;
+	float SinValueRight;
+
 	void HandleTurn(float InputAxis);
-	FVector AjustPositionByRotation(float Angle, float Input);
 	// utils
+	void CalculateCosAndSinValues(FRotator CurrentRotator);
 	void ApplyRestrict(float & CheckedParam, float MinValue, float MaxValue);
 	void ResetCameraRotationAndZoom();
 
