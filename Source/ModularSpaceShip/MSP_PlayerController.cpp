@@ -23,6 +23,12 @@ void AMSP_PlayerController::BeginPlay()
 	this->SetInputMode(DefaultInput);
 
 	SelectionHUDPtr = Cast<AMSP_HUD_Canvas>(GetHUD());
+
+	if (SearchSubClass)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("NavVolume found!"));
+		CurrentNavVolume = Cast<ANavigationVolume3D>(UGameplayStatics::GetActorOfClass(GetWorld(), SearchSubClass));
+	}
 }
 
 // Called every frame
@@ -85,7 +91,17 @@ void AMSP_PlayerController::MoveReleased()
 			if (CurrentController)
 			{				
 				UE_LOG(LogTemp, Warning, TEXT("Cast OK"));
-							
+				// find path
+				TArray<FVector> CurrentPath = {};
+				TArray<TEnumAsByte<EObjectTypeQuery> > SkippedObjectTypes;		
+				SkippedObjectTypes.Add(TEnumAsByte<EObjectTypeQuery>(ECC_WorldStatic));
+				SkippedObjectTypes.Add(TEnumAsByte<EObjectTypeQuery>(ECC_WorldDynamic));				
+				CurrentNavVolume->FindPath(it->GetActorLocation(), DesiredLocation, SkippedObjectTypes, nullptr, CurrentPath);
+				
+				for (auto ot : CurrentPath)
+					CurrentController->MoveToLocation(ot, 20.0f, false, false);
+
+				/*
 				if (EPathFollowingRequestResult::RequestSuccessful == CurrentController->MoveToLocation(DesiredLocation,-1.0f, false, true))
 				{
 					UE_LOG(LogTemp, Warning, TEXT("RequestSuccessful"));
@@ -94,6 +110,7 @@ void AMSP_PlayerController::MoveReleased()
 				{
 					UE_LOG(LogTemp, Warning, TEXT("RequestFailed"));
 				}
+				*/
 			}
 		}
 				

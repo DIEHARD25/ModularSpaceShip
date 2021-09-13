@@ -23,7 +23,9 @@ public:
 		UCameraComponent * PlayerCamera;
 	UPROPERTY(EditAnywhere)
 		USpringArmComponent * CameraArm;
-	
+	UPROPERTY(EditAnywhere)
+		UStaticMeshComponent * BackgroundPlane;
+
 	APlayerController * CurrentPC;
 
 	//  movement

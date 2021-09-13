@@ -13,6 +13,9 @@ AMSP_Camera::AMSP_Camera()
 
 	PlayerCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("PlayerCamera"));
 	CameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraArm"));
+	BackgroundPlane = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("invisiblePlane"));
+	BackgroundPlane->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	BackgroundPlane->SetVisibility(false);
 
 	CameraArm->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	PlayerCamera->AttachToComponent(CameraArm, FAttachmentTransformRules::KeepRelativeTransform);
@@ -24,7 +27,7 @@ AMSP_Camera::AMSP_Camera()
 	MovementRestrictX = 25000.0f;
 	MovementRestrictY = 25000.0f;
 	// height
-	PlaneHeight = 1000.0f;
+	PlaneHeight = 500.0f;
 	NumOfPlanesHigh = NumOfPlanesLow = 1;
 	CurrentPlaneNum = 0;
 	// zoom
