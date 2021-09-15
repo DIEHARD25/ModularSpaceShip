@@ -3,6 +3,7 @@
 
 #include "MSP_PlayerController.h"
 
+
 AMSP_PlayerController::AMSP_PlayerController()
 {
 	bShowMouseCursor = true;
@@ -23,12 +24,6 @@ void AMSP_PlayerController::BeginPlay()
 	this->SetInputMode(DefaultInput);
 
 	SelectionHUDPtr = Cast<AMSP_HUD_Canvas>(GetHUD());
-
-	if (SearchSubClass)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("NavVolume found!"));
-		CurrentNavVolume = Cast<ANavigationVolume3D>(UGameplayStatics::GetActorOfClass(GetWorld(), SearchSubClass));
-	}
 }
 
 // Called every frame
@@ -86,31 +81,17 @@ void AMSP_PlayerController::MoveReleased()
 	{
 		for (auto it : SelectedShips)
 		{
-			// movement call
 			AMSP_SpaceShipController * CurrentController = Cast<AMSP_SpaceShipController>(it->GetController());
 			if (CurrentController)
-			{				
+			{
 				UE_LOG(LogTemp, Warning, TEXT("Cast OK"));
 				// find path
-				TArray<FVector> CurrentPath = {};
-				TArray<TEnumAsByte<EObjectTypeQuery> > SkippedObjectTypes;		
-				SkippedObjectTypes.Add(TEnumAsByte<EObjectTypeQuery>(ECC_WorldStatic));
-				SkippedObjectTypes.Add(TEnumAsByte<EObjectTypeQuery>(ECC_WorldDynamic));				
-				CurrentNavVolume->FindPath(it->GetActorLocation(), DesiredLocation, SkippedObjectTypes, nullptr, CurrentPath);
-				
-				for (auto ot : CurrentPath)
-					CurrentController->MoveToLocation(ot, 20.0f, false, false);
-
-				/*
-				if (EPathFollowingRequestResult::RequestSuccessful == CurrentController->MoveToLocation(DesiredLocation,-1.0f, false, true))
+				TArray<FVector> TmpArray = CurrentController->SearchPath(DesiredLocation);
+				for (auto ot : TmpArray)
 				{
-					UE_LOG(LogTemp, Warning, TEXT("RequestSuccessful"));
-				}
-				else
-				{
-					UE_LOG(LogTemp, Warning, TEXT("RequestFailed"));
-				}
-				*/
+					UE_LOG(LogTemp, Warning, TEXT("Path point: %f %f %f"), ot.X, ot.Y, ot.Z);
+					CurrentController->MoveToLocation(ot, -1.0f, false, true);					
+				}		
 			}
 		}
 				

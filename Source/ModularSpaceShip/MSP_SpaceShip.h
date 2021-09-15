@@ -6,6 +6,9 @@
 #include "GameFramework/Pawn.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
+
+#include "MSP_SpaceShipMovementComponent.h"
+
 #include "MSP_SpaceShip.generated.h"
 
 UCLASS()
@@ -20,8 +23,10 @@ public:
 	// components
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent * ShipMesh;
+	
 	UPROPERTY(EditAnywhere)
-		UFloatingPawnMovement * MovementComp;
+		UMSP_SpaceShipMovementComponent * MovementComp;
+		
 
 protected:
 	// Called when the game starts or when spawned
@@ -34,4 +39,5 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	virtual UPawnMovementComponent* GetMovementComponent() const override;
 };

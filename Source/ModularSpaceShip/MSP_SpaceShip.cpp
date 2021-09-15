@@ -12,11 +12,12 @@ AMSP_SpaceShip::AMSP_SpaceShip()
 
 	ShipMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ShipMesh"));
 	ShipMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-
-	MovementComp = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Movement"));
+	
+	MovementComp = CreateDefaultSubobject<UMSP_SpaceShipMovementComponent>(TEXT("Movement"));
 	MovementComp->SetUpdatedComponent(RootComponent);
 	
 	MovementComp->Activate();
+	
 }
 
 // Called when the game starts or when spawned
@@ -30,7 +31,6 @@ void AMSP_SpaceShip::BeginPlay()
 void AMSP_SpaceShip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
@@ -38,5 +38,10 @@ void AMSP_SpaceShip::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+UPawnMovementComponent * AMSP_SpaceShip::GetMovementComponent() const
+{
+	return MovementComp;
 }
 

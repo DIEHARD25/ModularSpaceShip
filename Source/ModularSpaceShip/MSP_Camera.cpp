@@ -13,9 +13,6 @@ AMSP_Camera::AMSP_Camera()
 
 	PlayerCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("PlayerCamera"));
 	CameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraArm"));
-	BackgroundPlane = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("invisiblePlane"));
-	BackgroundPlane->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-	BackgroundPlane->SetVisibility(false);
 
 	CameraArm->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	PlayerCamera->AttachToComponent(CameraArm, FAttachmentTransformRules::KeepRelativeTransform);

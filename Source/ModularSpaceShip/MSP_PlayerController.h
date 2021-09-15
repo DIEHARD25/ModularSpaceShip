@@ -10,8 +10,6 @@
 #include "MSP_HUD_Canvas.h"
 #include "MSP_SpaceShip.h"
 #include "MSP_Camera.h"
-// plugins
-#include "NavigationVolume3D.h"
 
 #include "MSP_PlayerController.generated.h"
 
@@ -38,11 +36,6 @@ public:
 	virtual void SetupInputComponent() override;
 
 	AMSP_HUD_Canvas * SelectionHUDPtr;
-
-	ANavigationVolume3D * CurrentNavVolume;
-
-	UPROPERTY(EditAnywhere)
-		TSubclassOf<ANavigationVolume3D> SearchSubClass;	
 
 	TArray<AMSP_SpaceShip *> SelectedShips;
 
