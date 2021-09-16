@@ -22,5 +22,5 @@ void UMSP_SpaceShipMovementComponent::RequestDirectMove(const FVector & MoveVelo
 	// called when we set up velocity directly
 	//UE_LOG(LogTemp, Warning, TEXT("RequestDirectMove call: %f %f %f"), MoveVelocity.X, MoveVelocity.Y, MoveVelocity.Z);
 
-	Super::RequestDirectMove(MoveVelocity, bForceMaxSpeed);
+	//Super::RequestDirectMove(MoveVelocity, bForceMaxSpeed);
 }

@@ -8,6 +8,7 @@ AMSP_PlayerController::AMSP_PlayerController()
 {
 	bShowMouseCursor = true;
 	bEnableClickEvents = true;
+
 	DefaultMouseCursor = EMouseCursor::Crosshairs;
 }
 
@@ -41,6 +42,8 @@ void AMSP_PlayerController::SetupInputComponent()
 	InputComponent->BindAction("LMB", IE_Released, this, &AMSP_PlayerController::SelectionReleased);
 
 	InputComponent->BindAction("RMB", IE_Pressed, this, &AMSP_PlayerController::MoveReleased);
+	InputComponent->BindAction("MoveToGoal", IE_Pressed, this, &AMSP_PlayerController::MoveGoalSelection);
+	InputComponent->BindAction("HeightAjust", IE_Pressed, this, &AMSP_PlayerController::HeightAjustMode);
 }
 
 void AMSP_PlayerController::SelectionPressed()
@@ -49,6 +52,11 @@ void AMSP_PlayerController::SelectionPressed()
 
 	SelectionHUDPtr->SelectionPointStart = SelectionHUDPtr->GetMousePosition2D();
 	SelectionHUDPtr->bIsSelectionMode = true;
+	if ((SelectionHUDPtr->bIsMoveSelectionMode || SelectionHUDPtr->bIsHeightSelectionMode) && SelectedShips.Num())
+	{
+		SelectionHUDPtr->bIsHeightSelectionMode = SelectionHUDPtr->bIsHeightSelectionMode = false;
+		MoveReleased();
+	}
 }
 
 void AMSP_PlayerController::SelectionReleased()
@@ -56,6 +64,8 @@ void AMSP_PlayerController::SelectionReleased()
 	UE_LOG(LogTemp, Warning, TEXT("SelectionReleased"));
 	SelectionHUDPtr->SelectionPointEnd = SelectionHUDPtr->GetMousePosition2D();
 	SelectionHUDPtr->bIsSelectionMode = false;
+	SelectionHUDPtr->bIsMoveSelectionMode = false;
+	SelectionHUDPtr->bIsHeightSelectionMode = false;
 
 	SelectedShips = SelectionHUDPtr->FoundShips;
 	UE_LOG(LogTemp, Warning, TEXT("SelectionReleased. FoundShipsNum: %d"), SelectedShips.Num());
@@ -64,16 +74,14 @@ void AMSP_PlayerController::SelectionReleased()
 void AMSP_PlayerController::MoveReleased()
 {
 	UE_LOG(LogTemp, Warning, TEXT("MoveReleased"));
-	
+
+	SelectionHUDPtr->bIsMoveSelectionMode = false;
+	SelectionHUDPtr->bIsHeightSelectionMode = false;
 	FHitResult Hit;
 	GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, true, Hit);
-	AMSP_Camera * CameraPawn = Cast<AMSP_Camera>(GetPawn());
-	if(CameraPawn)
-		UE_LOG(LogTemp, Warning, TEXT("Cast OK"));
-
-	//Hit.Location.Z = 0.0f;
-
-	FVector DesiredLocation = Hit.Location + FVector(0.0f, 0.0f, CameraPawn->GetActorLocation().Z);
+	
+	FVector DesiredLocation = Hit.Location + FVector(0.0f, 0.0f, SelectionHUDPtr->Height.Z);
+	SelectionHUDPtr->Height.Z = 0.0f;
 
 	UE_LOG(LogTemp, Warning, TEXT("HitLocation: %f %f %f"), DesiredLocation.X, DesiredLocation.Y, DesiredLocation.Z);
 
@@ -98,3 +106,19 @@ void AMSP_PlayerController::MoveReleased()
 	}
 	
 }
+
+void AMSP_PlayerController::MoveGoalSelection()
+{
+	UE_LOG(LogTemp, Warning, TEXT("MoveGoalSelection"));
+	SelectionHUDPtr->bIsMoveSelectionMode = true;
+	if (SelectedShips.Num())
+		SelectionHUDPtr->LeadingSpaceShip = SelectedShips[0];
+	
+}
+
+void AMSP_PlayerController::HeightAjustMode()
+{
+	UE_LOG(LogTemp, Warning, TEXT("HeightAjustMode"));
+	SelectionHUDPtr->bIsHeightSelectionMode = true;
+}
+

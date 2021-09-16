@@ -52,22 +52,7 @@ FPathFollowingRequestResult AMSP_SpaceShipController::MoveTo(const FAIMoveReques
 		AMSP_SpaceShip * Ship = Cast<AMSP_SpaceShip>(GetPawn());
 		if (Ship)
 		{
-			FRotator CurrentShipRotator = Ship->GetActorRotation();
-			FRotator DesiredRotation = UKismetMathLibrary::MakeRotFromX(MoveRequest.GetGoalLocation());
-			if (FMath::IsNearlyEqual(CurrentShipRotator.Yaw, DesiredRotation.Yaw, 2.0f))
-			{
-				return Super::MoveTo(MoveRequest, OutPath);
-			}
-			else
-			{
-				float DesiredYaw = UKismetMathLibrary::RInterpTo_Constant(
-					CurrentShipRotator,
-					FRotator(0.0, DesiredRotation.Yaw, 0.0),
-					GetWorld()->GetDeltaSeconds(),
-					250.0f).Yaw;
-				// apply Yaw
-				Ship->SetActorRotation(FRotator(0.0, DesiredYaw, 0.0));
-			}
+			return Super::MoveTo(MoveRequest, OutPath);
 		}
 		//UE_LOG(LogTemp, Warning, TEXT("GetPawnRotator: %f %f %f"), GetPawn()->GetActorRotation().Pitch, GetPawn()->GetActorRotation().Yaw, GetPawn()->GetActorRotation().Roll);		
 	}

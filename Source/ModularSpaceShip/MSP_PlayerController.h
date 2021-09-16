@@ -43,4 +43,7 @@ public:
 	void SelectionReleased();
 
 	void MoveReleased();
+
+	void MoveGoalSelection();
+	void HeightAjustMode();
 };
