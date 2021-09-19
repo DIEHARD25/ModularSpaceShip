@@ -26,16 +26,9 @@ public:
 	FVector2D GetMousePosition2D();
 	FVector GetMousePositionToWorld();
 
-	FVector MoveGoalStart;
-	FVector MoveGoalEnd;
-
-	//FVector Height;
-
-	AMSP_SpaceShip * LeadingSpaceShip;
-
 	bool bIsSelectionMode;
-	bool bIsMoveSelectionMode;
-	//bool bIsHeightSelectionMode;
+	bool bIsMoveDrawMode;
 
 	TArray<AMSP_SpaceShip *> FoundShips;
+	TArray<FVector> FoundShipsTargetLocation;
 };
