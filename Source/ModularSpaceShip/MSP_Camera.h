@@ -37,7 +37,7 @@ public:
 	void MoveUp(float InputAxis);
 	void MoveRight(float InputAxis);
 	// height
-
+	/*
 	UPROPERTY(EditAnywhere)
 		float PlaneHeight;
 	UPROPERTY(EditAnywhere)
@@ -50,7 +50,7 @@ public:
 	void ChangePlaneToHigher();
 	void ChangePlaneToLower();
 	void ResetToDefaultPlane();
-
+	*/
 	// zoom
 	UPROPERTY(EditAnywhere)
 		float ZoomSpeed;

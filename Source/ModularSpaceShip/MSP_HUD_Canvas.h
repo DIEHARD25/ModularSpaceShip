@@ -29,13 +29,13 @@ public:
 	FVector MoveGoalStart;
 	FVector MoveGoalEnd;
 
-	FVector Height;
+	//FVector Height;
 
 	AMSP_SpaceShip * LeadingSpaceShip;
 
 	bool bIsSelectionMode;
 	bool bIsMoveSelectionMode;
-	bool bIsHeightSelectionMode;
+	//bool bIsHeightSelectionMode;
 
 	TArray<AMSP_SpaceShip *> FoundShips;
 };

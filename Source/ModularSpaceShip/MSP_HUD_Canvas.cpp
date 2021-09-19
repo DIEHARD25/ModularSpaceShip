@@ -7,7 +7,7 @@ AMSP_HUD_Canvas::AMSP_HUD_Canvas()
 {
 	bIsSelectionMode = false;
 	bIsMoveSelectionMode = false;
-	bIsHeightSelectionMode = false;
+	//bIsHeightSelectionMode = false;
 	LeadingSpaceShip = nullptr;
 }
 
@@ -29,7 +29,7 @@ void AMSP_HUD_Canvas::DrawHUD()
 			Draw3DLine(LeadingSpaceShip->GetActorLocation(), MoveGoalEnd, FColor(0, 0, 1, 0.15f));
 		}
 	}
-
+	/*
 	if (bIsHeightSelectionMode)
 	{
 		if (LeadingSpaceShip)
@@ -44,6 +44,7 @@ void AMSP_HUD_Canvas::DrawHUD()
 			Draw3DLine(MoveGoalEnd, Height, FColor(0, 0, 1, 0.15f));
 		}
 	}
+	*/
 }
 
 FVector AMSP_HUD_Canvas::GetMousePositionToWorld()

@@ -28,6 +28,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	FVector MoveGoalLocation;
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -44,6 +46,6 @@ public:
 
 	void MoveReleased();
 
-	void MoveGoalSelection();
-	void HeightAjustMode();
+	void MoveGoalSelection();	
+	//void HeightAjustMode();
 };

@@ -24,9 +24,11 @@ AMSP_Camera::AMSP_Camera()
 	MovementRestrictX = 25000.0f;
 	MovementRestrictY = 25000.0f;
 	// height
+	/*
 	PlaneHeight = 500.0f;
 	NumOfPlanesHigh = NumOfPlanesLow = 1;
 	CurrentPlaneNum = 0;
+	*/
 	// zoom
 	ZoomSpeed = 4000.0f;
 	ZoomLowRestrict = 300.0f;
@@ -55,8 +57,8 @@ void AMSP_Camera::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAction(TEXT("ResetCamera"), IE_Pressed, this, &AMSP_Camera::ResetCameraRotationAndZoom);
-	PlayerInputComponent->BindAction(TEXT("PlaneUp"), IE_Pressed, this, &AMSP_Camera::ChangePlaneToHigher);
-	PlayerInputComponent->BindAction(TEXT("PlaneDown"), IE_Pressed, this, &AMSP_Camera::ChangePlaneToLower);
+	//PlayerInputComponent->BindAction(TEXT("PlaneUp"), IE_Pressed, this, &AMSP_Camera::ChangePlaneToHigher);
+	//PlayerInputComponent->BindAction(TEXT("PlaneDown"), IE_Pressed, this, &AMSP_Camera::ChangePlaneToLower);
 
 	PlayerInputComponent->BindAxis(TEXT("MoveUp"), this, &AMSP_Camera::MoveUp);
 	PlayerInputComponent->BindAxis(TEXT("MoveRight"), this, &AMSP_Camera::MoveRight);
@@ -119,7 +121,7 @@ void AMSP_Camera::HandleTurn(float InputAxis)
 	// apply the turn
 	SetActorRotation(CurrentRotation);
 }
-
+/*
 void AMSP_Camera::ChangePlaneToHigher()
 {	
 	if (CurrentPlaneNum + 1 > NumOfPlanesHigh)
@@ -145,7 +147,7 @@ void AMSP_Camera::ChangePlaneToLower()
 
 	SetActorLocation(CurrentLocation);
 }
-
+*/
 void AMSP_Camera::CalculateCosAndSinValues(FRotator CurrentRotator)
 {
 	CosValueUp = FMath::Cos(FMath::DegreesToRadians(CurrentRotator.Yaw));
@@ -169,9 +171,9 @@ void AMSP_Camera::ResetCameraRotationAndZoom()
 	CalculateCosAndSinValues(DefaultTurn);
 
 	CameraArm->TargetArmLength = DefaultZoom;
-	ResetToDefaultPlane();
+	//ResetToDefaultPlane();
 }
-
+/*
 void AMSP_Camera::ResetToDefaultPlane()
 {
 	CurrentPlaneNum = 0;
@@ -180,3 +182,4 @@ void AMSP_Camera::ResetToDefaultPlane()
 
 	SetActorLocation(CurrentLocation);
 }
+*/
