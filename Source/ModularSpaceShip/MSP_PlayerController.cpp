@@ -93,6 +93,7 @@ void AMSP_PlayerController::MoveReleased()
 		// however, this is double-check since the arrays should be the same
 		//SelectionHUDPtr->FoundShips = SelectedShips;
 		SelectionHUDPtr->bIsMoveDrawMode = true;
+		SelectionHUDPtr->FoundShipsTargetLocation.Empty();
 
 		for (int32 i = 0; i < SelectedShips.Num(); ++i)
 		{			

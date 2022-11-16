@@ -66,6 +66,7 @@ public:
 	// utils
 	void CalculateCosAndSinValues(FRotator CurrentRotator);
 	void ApplyRestrict(float & CheckedParam, float MinValue, float MaxValue);
+	void ApplyRestrict(double & CheckedParam, float MinValue, float MaxValue);
 	void ResetCameraRotationAndZoom();
 
 protected:

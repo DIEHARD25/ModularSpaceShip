@@ -70,7 +70,10 @@ void AMSP_Camera::HandleZoom(float InputAxis)
 
 void AMSP_Camera::MoveUp(float InputAxis)
 {
-	if (InputAxis == 0.0f) return;
+	if (InputAxis == 0.0f)
+	{
+		return;
+	}
 
 	float Input = InputAxis * MovementSpeed * GetWorld()->GetDeltaSeconds();
 
@@ -86,7 +89,10 @@ void AMSP_Camera::MoveUp(float InputAxis)
 
 void AMSP_Camera::MoveRight(float InputAxis)
 {
-	if (InputAxis == 0.0f) return;
+	if (InputAxis == 0.0f)
+	{
+		return;
+	}
 
 	float Input = InputAxis * MovementSpeed * GetWorld()->GetDeltaSeconds();
 
@@ -102,13 +108,16 @@ void AMSP_Camera::MoveRight(float InputAxis)
 
 void AMSP_Camera::HandleTurn(float InputAxis)
 {
-	if (InputAxis == 0.0f) return;
+	if (InputAxis == 0.0f)
+	{
+		return;
+	}
 
 	FRotator CurrentRotation = GetActorRotation();
 	CurrentRotation.Yaw += InputAxis * TurnSpeed * GetWorld()->GetDeltaSeconds();
 	// restrict
 	ApplyRestrict(CurrentRotation.Yaw, TurnLeftRestrict, TurnRightRestrict);
-	// calculate the sin & cos values and stor them till next change of turn
+	// calculate the sin & cos values and store them till next change of turn
 	CalculateCosAndSinValues(CurrentRotation);
 	// apply the turn
 	SetActorRotation(CurrentRotation);
@@ -125,9 +134,20 @@ void AMSP_Camera::CalculateCosAndSinValues(FRotator CurrentRotator)
 void AMSP_Camera::ApplyRestrict(float & CheckedParam, float MinValue, float MaxValue)
 {
 	if (CheckedParam <= MinValue)
+	{
 		CheckedParam = MinValue;
-	else if(CheckedParam >= MaxValue)
+	}
+	else if (CheckedParam >= MaxValue)
+	{
 		CheckedParam = MaxValue;
+	}
+}
+
+void AMSP_Camera::ApplyRestrict(double& CheckedParam, float MinValue, float MaxValue)
+{
+	float LocalCheckParam = (float)CheckedParam;
+	ApplyRestrict(LocalCheckParam, MinValue, MaxValue);
+	CheckedParam = LocalCheckParam;
 }
 
 void AMSP_Camera::ResetCameraRotationAndZoom()

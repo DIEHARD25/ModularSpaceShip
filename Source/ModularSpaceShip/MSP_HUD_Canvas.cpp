@@ -13,7 +13,11 @@ void AMSP_HUD_Canvas::DrawHUD()
 {
 	if (bIsSelectionMode)
 	{
-		if(FoundShips.Num() != 0) FoundShips.Empty();
+		if (FoundShips.Num() != 0)
+		{
+			FoundShips.Empty();
+		}
+
 		SelectionPointEnd = GetMousePosition2D();
 		DrawRect(FLinearColor(0, 0, 1, 0.15f), SelectionPointStart.X, SelectionPointStart.Y, (SelectionPointEnd.X - SelectionPointStart.X), (SelectionPointEnd.Y - SelectionPointStart.Y));
 		GetActorsInSelectionRectangle<AMSP_SpaceShip>(SelectionPointStart, SelectionPointEnd, FoundShips, false, false);
@@ -22,8 +26,16 @@ void AMSP_HUD_Canvas::DrawHUD()
 	{
 		for (int32 i = 0; i < FoundShipsTargetLocation.Num(); ++i)
 		{
+			if (FoundShips.Num() == 0 || !FoundShipsTargetLocation.IsValidIndex(i) || !FoundShips.IsValidIndex(i))
+			{
+				break;
+			}
+
 			if (FoundShipsTargetLocation[i] == FoundShips[i]->GetActorLocation())
-				continue;				
+			{
+				continue;
+			}
+
 			Draw3DLine(FoundShips[i]->GetActorLocation(), FoundShipsTargetLocation[i], FColor(0, 0, 1, 0.15f));			
 		}
 	}
